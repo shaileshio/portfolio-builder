@@ -38,7 +38,7 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.exclude": {
-    "**/.*env": true,
+    "**/.venv": true,
     "**/.git": true,
     "**/.DS_Store": true,
     "**/__pycache__": true,

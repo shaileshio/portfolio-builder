@@ -1,54 +1,39 @@
 from functools import lru_cache
-from typing import Literal
 
+from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-COMMON_CONFIG = SettingsConfigDict(
-    env_file=".env",
-    env_file_encoding="utf-8",
-    case_sensitive=False,
-    extra="ignore",
-)
 
-
-class AppSettings(BaseSettings):
-    model_config = {
-        **COMMON_CONFIG,
-        "env_prefix": "APP_",
-    }
-
+class AppConfig(BaseModel):
     name: str = "Portfolio"
-    environment: Literal["development", "production"] = "development"
+    description: str = "Production-grade AI-powered engineering portfolio"
     api_prefix: str = "/api/v1"
     debug: bool = True
 
 
-class CorsSettings(BaseSettings):
-    model_config = {
-        **COMMON_CONFIG,
-        "env_prefix": "CORS_",
-    }
-
+class CorsConfig(BaseModel):
     allow_origins: list[str] = ["127.0.0.1", "localhost"]
     allow_methods: list[str] = ["*"]
     allow_headers: list[str] = ["*"]
     allow_credentials: bool = True
 
 
-class DatabaseSettings(BaseSettings):
-    model_config = {
-        **COMMON_CONFIG,
-        "env_prefix": "DATABASE_",
-    }
-
+class DatabaseConfig(BaseModel):
     url: str | None = None
 
 
-class Settings:
-    def __init__(self) -> None:
-        self.app = AppSettings()
-        self.cors = CorsSettings()
-        self.db = DatabaseSettings()
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        env_nested_delimiter="__",
+        extra="ignore",
+    )
+
+    app: AppConfig = Field(default_factory=AppConfig)
+    cors: CorsConfig = Field(default_factory=CorsConfig)
+    database: DatabaseConfig = Field(default_factory=DatabaseConfig)
 
 
 @lru_cache
