@@ -1,7 +1,99 @@
 [project]
 name = "portfolio"
 version = "0.1.0"
-description = "Add your description here"
+description = "Production-grade AI-powered engineering portfolio"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "alembic>=1.20.0",
+    "fastapi[standard]>=0.141.1",
+    "pydantic-settings>=2.15.0",
+    "uvicorn[standard]>=0.52.4",
+]
+
+# =============================================================================
+# Development Dependencies.
+# =============================================================================
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "pytest-cov>=7.1.0",
+    "pytest-faker>=2.0.0",
+]
+
+# =============================================================================
+# Pyright Configurations.
+# =============================================================================
+
+[tool.pyright]
+typeCheckingMode = "strict"
+reportMissingTypeStubs = false
+reportUntypedFunctionDecorator = false
+
+# =============================================================================
+# Black Formatter Configurations.
+# =============================================================================
+
+[tool.black]
+line-length = 88
+
+# =============================================================================
+# Ishort Formatter Configurations.
+# =============================================================================
+
+[tool.isort]
+profile = "black"
+
+# =============================================================================
+# Disable Ruff Rules for Test Cases.
+# =============================================================================
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*.py" = ["S101"]
+
+# =============================================================================
+# Pytest Configurations.
+# =============================================================================
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = """
+--strict-markers
+--strict-config
+--tb=short
+--cov=app
+--cov-report=term-missing
+--cov-report=html
+--cov-report=xml
+--no-cov-on-fail
+"""
+testpaths = ["tests"]
+asyncio_mode = "auto"
+pythonpath = ["."]
+filterwarnings = ["error"]
+markers = [
+    "unit: Unit tests",
+    "integration: Integration tests",
+    "e2e: End-to-end tests",
+    "slow: Slow tests",
+]
+
+# =============================================================================
+# Pytest Coverage Configurations.
+# =============================================================================
+
+[tool.coverage.run]
+branch = true
+source = ["app"]
+
+# =============================================================================
+# Pytest Coverage Report Configurations.
+# =============================================================================
+
+[tool.coverage.report]
+# fail_under = 85
+show_missing = true
+skip_covered = true
