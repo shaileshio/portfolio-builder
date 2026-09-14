@@ -148,9 +148,13 @@
   // GitHub Copilot
   // ==========================================
   "github.copilot.enable": {
-    "*": true,
+    "*": false,
     "plaintext": false,
-    "markdown": true
+    "markdown": true,
+    "scminput": false,
+    "typescriptreact": false,
+    "python": false,
+    "jsonc": true
   },
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
