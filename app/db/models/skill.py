@@ -12,6 +12,7 @@ from ._mixins import UUID7Mixin
 
 if TYPE_CHECKING:
     from .profile import Profile
+    from .skill_category import SkillCategory
 
 
 class Skill(UUID7Mixin, Base):
@@ -21,6 +22,15 @@ class Skill(UUID7Mixin, Base):
         ForeignKey(
             "profiles.id",
             ondelete="CASCADE",
+        ),
+        nullable=False,
+        index=True,
+    )
+
+    category_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey(
+            "skill_categories.id",
+            ondelete="RESTRICT",
         ),
         nullable=False,
         index=True,
@@ -41,5 +51,9 @@ class Skill(UUID7Mixin, Base):
     )
 
     profile: Mapped[Profile] = relationship(
+        back_populates="skills",
+    )
+
+    category: Mapped[SkillCategory] = relationship(
         back_populates="skills",
     )
