@@ -1,7 +1,7 @@
 from datetime import datetime
 from uuid import UUID
 
-from sqlalchemy import DateTime, func
+from sqlalchemy import DateTime, func, text
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 from sqlalchemy.orm import Mapped, mapped_column
 from uuid6 import uuid7
@@ -20,6 +20,7 @@ class UUID7Mixin:
         PG_UUID(as_uuid=True),
         primary_key=True,
         default=uuid7,
+        server_default=text("uuidv7()"),
     )
 
 
