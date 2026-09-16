@@ -27,7 +27,8 @@ class User(UUID7Mixin, Base):
     )
 
     profile: Mapped[Profile | None] = relationship(
-        "Profile",
+        argument="Profile",
         back_populates="user",
         uselist=False,
+        cascade="all, delete-orphan",
     )

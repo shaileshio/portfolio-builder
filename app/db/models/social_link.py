@@ -42,6 +42,6 @@ class SocialLink(UUID7Mixin, Base):
     )
 
     profile: Mapped[list[Profile]] = relationship(
-        "Profile",
+        argument="Profile",
         back_populates="social_links",
     )

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import uuid
 from typing import TYPE_CHECKING
+from uuid import UUID
 
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 class Skill(UUID7Mixin, Base):
     __tablename__: str = "skills"
 
-    profile_id: Mapped[uuid.UUID] = mapped_column(
+    profile_id: Mapped[UUID] = mapped_column(
         ForeignKey(
             "profiles.id",
             ondelete="CASCADE",
@@ -27,7 +27,7 @@ class Skill(UUID7Mixin, Base):
         index=True,
     )
 
-    category_id: Mapped[uuid.UUID] = mapped_column(
+    category_id: Mapped[UUID] = mapped_column(
         ForeignKey(
             "skill_categories.id",
             ondelete="RESTRICT",
