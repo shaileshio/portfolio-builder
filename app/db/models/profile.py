@@ -10,6 +10,7 @@ from app.db.base import Base
 from ._mixins import TimestampMixin, UUID7Mixin
 
 if TYPE_CHECKING:
+    from .skill import Skill
     from .social_link import SocialLink
     from .user import User
 
@@ -62,6 +63,11 @@ class Profile(UUID7Mixin, TimestampMixin, Base):
 
     social_links: Mapped[list[SocialLink]] = relationship(
         "SocialLink",
+        back_populates="profile",
+        cascade="all, delete-orphan",
+    )
+
+    skills: Mapped[list[Skill]] = relationship(
         back_populates="profile",
         cascade="all, delete-orphan",
     )
