@@ -27,6 +27,7 @@ if TYPE_CHECKING:
         Profile,
         Skill,
         SocialLink,
+        Technology,
         User,
     )
 
@@ -145,5 +146,10 @@ class Portfolio(Base, name="portfolios"):
 
     skills: Mapped[list[Skill]] = relationship(
         back_populates="portfolio",
+        cascade=_CASCADE_DELETE_ORPHAN,
+    )
+
+    technologies: Mapped[list[Technology]] = relationship(
+        back_populates="technology",
         cascade=_CASCADE_DELETE_ORPHAN,
     )
