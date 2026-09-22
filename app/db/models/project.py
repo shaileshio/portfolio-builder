@@ -18,6 +18,7 @@ from .__types import CreatedAt, UpdatedAt, UUID7PrimaryKey
 if TYPE_CHECKING:
     from .portfolio import Portfolio
     from .project_image import ProjectImage
+    from .project_link import ProjectLink
     from .project_technology import ProjectTechnology
 
 
@@ -126,6 +127,11 @@ class Project(Base, name="projects"):
     )
 
     images: Mapped[list[ProjectImage]] = relationship(
+        back_populates="project",
+        cascade="all, delete-orphan",
+    )
+
+    links: Mapped[list[ProjectLink]] = relationship(
         back_populates="project",
         cascade="all, delete-orphan",
     )
