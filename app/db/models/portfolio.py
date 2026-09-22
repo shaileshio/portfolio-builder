@@ -22,6 +22,7 @@ if TYPE_CHECKING:
         PortfolioSettings,
         PortfolioTheme,
         Profile,
+        SocialLink,
         User,
     )
 
@@ -116,4 +117,9 @@ class Portfolio(Base, name="portfolios"):
         back_populates="portfolio",
         cascade=_CASCADE_DELETE_ORPHAN,
         order_by="PortfolioSection.sort_order",
+    )
+
+    social_links: Mapped[list[SocialLink]] = relationship(
+        back_populates="portfolio",
+        cascade="all, delete-orphan",
     )
