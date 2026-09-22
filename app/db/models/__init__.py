@@ -16,6 +16,7 @@ from .service import Service
 from .skill import Skill
 from .skill_category import SkillCategory
 from .social_link import SocialLink
+from .tag import Tag
 from .technology import Technology
 from .testimonial import Testimonial
 from .user import User
@@ -39,6 +40,7 @@ __all__: list[str] = [
     "Skill",
     "SkillCategory",
     "SocialLink",
+    "Tag",
     "Technology",
     "Testimonial",
     "User",
