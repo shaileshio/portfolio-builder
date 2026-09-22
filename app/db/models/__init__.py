@@ -1,6 +1,7 @@
 from .blog_post import BlogPost
 from .blog_post_tag import BlogPostTag
 from .certification import Certification
+from .contact_message import ContactMessage
 from .education import Education
 from .experience import Experience
 from .media_asset import MediaAsset
@@ -27,6 +28,7 @@ __all__: list[str] = [
     "BlogPost",
     "BlogPostTag",
     "Certification",
+    "ContactMessage",
     "Education",
     "Experience",
     "MediaAsset",
