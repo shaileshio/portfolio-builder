@@ -16,6 +16,7 @@ from .skill import Skill
 from .skill_category import SkillCategory
 from .social_link import SocialLink
 from .technology import Technology
+from .testimonial import Testimonial
 from .user import User
 
 __all__: list[str] = [
@@ -37,5 +38,6 @@ __all__: list[str] = [
     "SkillCategory",
     "SocialLink",
     "Technology",
+    "Testimonial",
     "User",
 ]

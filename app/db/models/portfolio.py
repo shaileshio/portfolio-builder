@@ -29,6 +29,7 @@ if TYPE_CHECKING:
         Service,
         Skill,
         SocialLink,
+        Testimonial,
         User,
     )
 
@@ -151,10 +152,15 @@ class Portfolio(Base, name="portfolios"):
 
     projects: Mapped[list[Project]] = relationship(
         back_populates="portfolio",
-        cascade="all, delete-orphan",
+        cascade=_CASCADE_DELETE_ORPHAN,
     )
 
     services: Mapped[list[Service]] = relationship(
         back_populates="portfolio",
-        cascade="all, delete-orphan",
+        cascade=_CASCADE_DELETE_ORPHAN,
+    )
+
+    testimonials: Mapped[list[Testimonial]] = relationship(
+        back_populates="portfolio",
+        cascade=_CASCADE_DELETE_ORPHAN,
     )
