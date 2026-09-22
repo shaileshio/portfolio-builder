@@ -1,9 +1,14 @@
+from typing import TYPE_CHECKING
+
 from sqlalchemy import Boolean, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
 
 from .__types import CreatedAt, UpdatedAt, UUID7PrimaryKey
+
+if TYPE_CHECKING:
+    from .portfolio import Portfolio
 
 
 class User(Base, name="users"):
@@ -34,3 +39,8 @@ class User(Base, name="users"):
 
     created_at: Mapped[CreatedAt]
     updated_at: Mapped[UpdatedAt]
+
+    portfolios: Mapped[list[Portfolio]] = relationship(
+        back_populates="owner",
+        cascade="all, delete-orphan",
+    )
