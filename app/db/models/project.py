@@ -21,6 +21,8 @@ if TYPE_CHECKING:
     from .project_link import ProjectLink
     from .project_technology import ProjectTechnology
 
+_CASCADE_DELETE_ORPHAN = "all, delete-orphan"
+
 
 class ProjectStatus(StrEnum):
     DRAFT = "draft"
@@ -123,15 +125,15 @@ class Project(Base, name="projects"):
 
     technologies: Mapped[list[ProjectTechnology]] = relationship(
         back_populates="project",
-        cascade="all, delete-orphan",
+        cascade=_CASCADE_DELETE_ORPHAN,
     )
 
     images: Mapped[list[ProjectImage]] = relationship(
         back_populates="project",
-        cascade="all, delete-orphan",
+        cascade=_CASCADE_DELETE_ORPHAN,
     )
 
     links: Mapped[list[ProjectLink]] = relationship(
         back_populates="project",
-        cascade="all, delete-orphan",
+        cascade=_CASCADE_DELETE_ORPHAN,
     )

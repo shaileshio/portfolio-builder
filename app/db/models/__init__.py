@@ -11,6 +11,7 @@ from .project import Project
 from .project_image import ProjectImage
 from .project_link import ProjectLink
 from .project_technology import ProjectTechnology
+from .service import Service
 from .skill import Skill
 from .skill_category import SkillCategory
 from .social_link import SocialLink
@@ -31,6 +32,7 @@ __all__: list[str] = [
     "ProjectImage",
     "ProjectLink",
     "ProjectTechnology",
+    "Service",
     "Skill",
     "SkillCategory",
     "SocialLink",

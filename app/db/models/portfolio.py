@@ -26,19 +26,19 @@ if TYPE_CHECKING:
         PortfolioTheme,
         Profile,
         Project,
+        Service,
         Skill,
         SocialLink,
         User,
     )
+
+_CASCADE_DELETE_ORPHAN = "all, delete-orphan"
 
 
 class PortfolioStatus(StrEnum):
     DRAFT = "draft"
     PUBLISHED = "published"
     ARCHIVED = "archived"
-
-
-_CASCADE_DELETE_ORPHAN = "all, delete-orphan"
 
 
 class Portfolio(Base, name="portfolios"):
@@ -150,6 +150,11 @@ class Portfolio(Base, name="portfolios"):
     )
 
     projects: Mapped[list[Project]] = relationship(
+        back_populates="portfolio",
+        cascade="all, delete-orphan",
+    )
+
+    services: Mapped[list[Service]] = relationship(
         back_populates="portfolio",
         cascade="all, delete-orphan",
     )
