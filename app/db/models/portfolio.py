@@ -25,6 +25,7 @@ if TYPE_CHECKING:
         PortfolioSettings,
         PortfolioTheme,
         Profile,
+        Skill,
         SocialLink,
         User,
     )
@@ -139,5 +140,10 @@ class Portfolio(Base, name="portfolios"):
 
     certifications: Mapped[list[Certification]] = relationship(
         back_populates="certification",
+        cascade=_CASCADE_DELETE_ORPHAN,
+    )
+
+    skills: Mapped[list[Skill]] = relationship(
+        back_populates="portfolio",
         cascade=_CASCADE_DELETE_ORPHAN,
     )
