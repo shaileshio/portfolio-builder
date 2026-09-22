@@ -16,6 +16,7 @@ from app.db.base import Base
 from .__types import CreatedAt, UpdatedAt, UUID7PrimaryKey
 
 if TYPE_CHECKING:
+    from .profile import Profile
     from .user import User
 
 
@@ -76,4 +77,10 @@ class Portfolio(Base, name="portfolios"):
 
     owner: Mapped[User] = relationship(
         back_populates="portfolios",
+    )
+
+    profile: Mapped[Profile | None] = relationship(
+        back_populates="portfolio",
+        uselist=False,
+        cascade="all, delete-orphan",
     )
