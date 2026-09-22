@@ -16,10 +16,7 @@ from app.db.base import Base
 from .__types import CreatedAt, UpdatedAt, UUID7PrimaryKey
 
 if TYPE_CHECKING:
-    from .portfolio_settings import PortfolioSettings
-    from .portfolio_theme import PortfolioTheme
-    from .profile import Profile
-    from .user import User
+    from . import PortfolioSEO, PortfolioSettings, PortfolioTheme, Profile, User
 
 
 class PortfolioStatus(StrEnum):
@@ -100,4 +97,10 @@ class Portfolio(Base, name="portfolios"):
         back_populates="portfolio",
         uselist=False,
         cascade=_CASCADE_DELETE_ORPHAN,
+    )
+
+    seo: Mapped[PortfolioSEO | None] = relationship(
+        back_populates="portfolio",
+        uselist=False,
+        cascade="all, delete-orphan",
     )
