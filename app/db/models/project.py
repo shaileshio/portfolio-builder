@@ -17,6 +17,7 @@ from .__types import CreatedAt, UpdatedAt, UUID7PrimaryKey
 
 if TYPE_CHECKING:
     from .portfolio import Portfolio
+    from .project_technology import ProjectTechnology
 
 
 class ProjectStatus(StrEnum):
@@ -116,4 +117,9 @@ class Project(Base, name="projects"):
 
     portfolio: Mapped[Portfolio] = relationship(
         back_populates="projects",
+    )
+
+    technologies: Mapped[list[ProjectTechnology]] = relationship(
+        back_populates="project",
+        cascade="all, delete-orphan",
     )

@@ -8,6 +8,7 @@ from .portfolio_settings import PortfolioSettings
 from .portfolio_theme import PortfolioTheme
 from .profile import Profile
 from .project import Project
+from .project_technology import ProjectTechnology
 from .skill import Skill
 from .skill_category import SkillCategory
 from .social_link import SocialLink
@@ -25,6 +26,7 @@ __all__: list[str] = [
     "PortfolioTheme",
     "Profile",
     "Project",
+    "ProjectTechnology",
     "Skill",
     "SkillCategory",
     "SocialLink",
