@@ -2,7 +2,7 @@ from datetime import date
 from typing import TYPE_CHECKING
 from uuid import UUID
 
-from sqlalchemy import Boolean, Date, String, Text
+from sqlalchemy import Date, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
@@ -13,50 +13,43 @@ if TYPE_CHECKING:
     from .portfolio import Portfolio
 
 
-class Experience(Base, name="experiences"):
+class Education(Base, name="educations"):
     id: Mapped[UUID7PrimaryKey]
 
     portfolio_id: Mapped[UUID] = mapped_column(
+        ForeignKey(column="portfolios.id"),
         nullable=False,
         index=True,
     )
 
-    company: Mapped[str] = mapped_column(
-        String(length=200),
+    institution: Mapped[str] = mapped_column(
+        String(length=255),
         nullable=False,
     )
 
-    role: Mapped[str] = mapped_column(
-        String(length=200),
+    degree: Mapped[str] = mapped_column(
+        String(length=255),
         nullable=False,
     )
 
-    location: Mapped[str | None] = mapped_column(
-        String(length=200),
+    field_of_study: Mapped[str | None] = mapped_column(
+        String(length=255),
     )
 
-    employment_type: Mapped[str | None] = mapped_column(
-        String(length=100),
-    )
-
-    start_date: Mapped[date] = mapped_column(
+    start_date: Mapped[date | None] = mapped_column(
         Date,
-        nullable=False,
     )
 
     end_date: Mapped[date | None] = mapped_column(
         Date,
     )
 
-    current: Mapped[bool] = mapped_column(
-        Boolean,
-        default=False,
-        nullable=False,
+    description: Mapped[str | None] = mapped_column(
+        Text,
     )
 
-    description: Mapped[str] = mapped_column(
-        Text,
-        nullable=False,
+    grade: Mapped[str | None] = mapped_column(
+        String(length=100),
     )
 
     sort_order: Mapped[int] = mapped_column(
@@ -65,5 +58,5 @@ class Experience(Base, name="experiences"):
     )
 
     portfolio: Mapped[Portfolio] = relationship(
-        back_populates="experiences",
+        back_populates="educations",
     )

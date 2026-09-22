@@ -17,6 +17,7 @@ from .__types import CreatedAt, UpdatedAt, UUID7PrimaryKey
 
 if TYPE_CHECKING:
     from . import (
+        Education,
         Experience,
         PortfolioSection,
         PortfolioSEO,
@@ -126,6 +127,11 @@ class Portfolio(Base, name="portfolios"):
     )
 
     experiences: Mapped[list[Experience]] = relationship(
+        back_populates="portfolio",
+        cascade=_CASCADE_DELETE_ORPHAN,
+    )
+
+    educations: Mapped[list[Education]] = relationship(
         back_populates="portfolio",
         cascade=_CASCADE_DELETE_ORPHAN,
     )
