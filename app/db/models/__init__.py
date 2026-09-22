@@ -3,6 +3,7 @@ from .blog_post_tag import BlogPostTag
 from .certification import Certification
 from .education import Education
 from .experience import Experience
+from .media_asset import MediaAsset
 from .portfolio import Portfolio
 from .portfolio_section import PortfolioSection
 from .portfolio_seo import PortfolioSEO
@@ -28,6 +29,7 @@ __all__: list[str] = [
     "Certification",
     "Education",
     "Experience",
+    "MediaAsset",
     "Portfolio",
     "PortfolioSEO",
     "PortfolioSection",
