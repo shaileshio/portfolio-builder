@@ -1,34 +1,36 @@
-from typing import TYPE_CHECKING
-
-from sqlalchemy import String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import Boolean, String
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
 
-from ._mixins import UUID7Mixin
-
-if TYPE_CHECKING:
-    from .profile import Profile
+from .__types import CreatedAt, UpdatedAt, UUID7PrimaryKey
 
 
-class User(UUID7Mixin, Base):
-    __tablename__: str = "users"
+class User(Base, name="users"):
+    id: Mapped[UUID7PrimaryKey]
 
     email: Mapped[str] = mapped_column(
-        String(320),
-        nullable=False,
+        __name_pos=String(length=320),
         unique=True,
+        nullable=False,
         index=True,
     )
 
-    password_hash: Mapped[str] = mapped_column(
-        String(255),
+    password_hash: Mapped[str | None] = mapped_column(
+        __name_pos=String(length=255),
+    )
+
+    is_active: Mapped[bool] = mapped_column(
+        __name_pos=Boolean,
+        default=True,
         nullable=False,
     )
 
-    profile: Mapped[Profile | None] = relationship(
-        argument="Profile",
-        back_populates="user",
-        uselist=False,
-        cascade="all, delete-orphan",
+    is_verified: Mapped[bool] = mapped_column(
+        __name_pos=Boolean,
+        default=False,
+        nullable=False,
     )
+
+    created_at: Mapped[CreatedAt]
+    updated_at: Mapped[UpdatedAt]
