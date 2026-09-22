@@ -17,6 +17,7 @@ from .__types import CreatedAt, UpdatedAt, UUID7PrimaryKey
 
 if TYPE_CHECKING:
     from .portfolio_settings import PortfolioSettings
+    from .portfolio_theme import PortfolioTheme
     from .profile import Profile
     from .user import User
 
@@ -25,6 +26,9 @@ class PortfolioStatus(StrEnum):
     DRAFT = "draft"
     PUBLISHED = "published"
     ARCHIVED = "archived"
+
+
+_CASCADE_DELETE_ORPHAN = "all, delete-orphan"
 
 
 class Portfolio(Base, name="portfolios"):
@@ -83,11 +87,17 @@ class Portfolio(Base, name="portfolios"):
     profile: Mapped[Profile | None] = relationship(
         back_populates="portfolio",
         uselist=False,
-        cascade="all, delete-orphan",
+        cascade=_CASCADE_DELETE_ORPHAN,
     )
 
     settings: Mapped[PortfolioSettings | None] = relationship(
         back_populates="portfolio",
         uselist=False,
-        cascade="all, delete-orphan",
+        cascade=_CASCADE_DELETE_ORPHAN,
+    )
+
+    theme: Mapped[PortfolioTheme | None] = relationship(
+        back_populates="portfolio",
+        uselist=False,
+        cascade=_CASCADE_DELETE_ORPHAN,
     )
