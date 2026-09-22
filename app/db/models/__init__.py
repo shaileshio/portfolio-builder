@@ -1,3 +1,4 @@
+from .certification import Certification
 from .education import Education
 from .experience import Experience
 from .portfolio import Portfolio
@@ -10,6 +11,7 @@ from .social_link import SocialLink
 from .user import User
 
 __all__: list[str] = [
+    "Certification",
     "Education",
     "Experience",
     "Portfolio",
