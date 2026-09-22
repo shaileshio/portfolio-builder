@@ -1,4 +1,5 @@
 from .blog_post import BlogPost
+from .blog_post_tag import BlogPostTag
 from .certification import Certification
 from .education import Education
 from .experience import Experience
@@ -23,6 +24,7 @@ from .user import User
 
 __all__: list[str] = [
     "BlogPost",
+    "BlogPostTag",
     "Certification",
     "Education",
     "Experience",

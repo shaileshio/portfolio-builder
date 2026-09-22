@@ -11,6 +11,7 @@ from app.db.base import Base
 from .__types import CreatedAt, UpdatedAt, UUID7PrimaryKey
 
 if TYPE_CHECKING:
+    from .blog_post_tag import BlogPostTag
     from .portfolio import Portfolio
 
 
@@ -66,4 +67,9 @@ class BlogPost(Base, name="blog_posts"):
 
     portfolio: Mapped[Portfolio] = relationship(
         back_populates="blog_posts",
+    )
+
+    tags: Mapped[list[BlogPostTag]] = relationship(
+        back_populates="blog_posts",
+        cascade="all, delete-orphan",
     )
