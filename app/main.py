@@ -5,6 +5,7 @@ from fastapi.responses import RedirectResponse
 from app.core.config import Settings, get_settings
 from app.core.exceptions.handlers import register_exception_handlers
 from app.core.logging import configure_logging
+from app.modules.router import router
 
 configure_logging()
 
@@ -12,7 +13,6 @@ settings: Settings = get_settings()
 
 title: str = settings.app.title
 description: str = settings.app.description
-api_prefix: str = settings.app.api_prefix
 debug: bool = settings.app.debug
 
 
@@ -26,7 +26,6 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title=title,
         description=description,
-        api_prefix=api_prefix,
         debug=debug,
     )
 
@@ -49,3 +48,6 @@ app: FastAPI = create_app()
 @app.get(path="/", include_in_schema=False)
 def root(request: Request) -> RedirectResponse:
     return RedirectResponse(url="/docs", status_code=307)
+
+
+app.include_router(router, prefix="/api/v1")

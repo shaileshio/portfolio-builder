@@ -7,7 +7,6 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class AppConfig(BaseModel):
     title: str = "portfolio builder"
     description: str = "Production-grade AI-powered engineering portfolio builder"
-    api_prefix: str = "/api/v1"
     debug: bool = True
 
 

@@ -1,5 +1,7 @@
 from collections.abc import AsyncGenerator
+from typing import Annotated
 
+from fastapi import Depends
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
     AsyncSession,
@@ -18,20 +20,23 @@ if DATABASE_URL is None:
     raise OSError("Database url not found.")
 
 
-engine: AsyncEngine = create_async_engine(
+async_engine: AsyncEngine = create_async_engine(
     url=DATABASE_URL,
     pool_pre_ping=True,
 )
 
 
 AsyncSessionLocal: async_sessionmaker[AsyncSession] = async_sessionmaker(
-    bind=engine,
+    bind=async_engine,
     class_=AsyncSession,
     autoflush=False,
     expire_on_commit=False,
 )
 
 
-async def get_session() -> AsyncGenerator[AsyncSession]:
+async def get_async_session() -> AsyncGenerator[AsyncSession]:
     async with AsyncSessionLocal() as session:
         yield session
+
+
+type AsyncSessionDep = Annotated[AsyncSession, Depends(get_async_session)]
