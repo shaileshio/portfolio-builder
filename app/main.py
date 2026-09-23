@@ -3,6 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 
 from app.core.config import Settings, get_settings
+from app.core.logging import configure_logging
+
+configure_logging()
 
 settings: Settings = get_settings()
 
