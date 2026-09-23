@@ -13,14 +13,12 @@ from sqlalchemy import (
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
-
-from .__types import CreatedAt, UpdatedAt, UUID7PrimaryKey
+from app.db.types import CreatedAt, UpdatedAt, UUID7PrimaryKey
 
 if TYPE_CHECKING:
-    from .portfolio import Portfolio
-    from .project_image import ProjectImage
-    from .project_link import ProjectLink
-    from .project_technology import ProjectTechnology
+    from ..portfolio import Portfolio
+    from . import ProjectImage, ProjectLink, ProjectTechnology
+
 
 _CASCADE_DELETE_ORPHAN = "all, delete-orphan"
 

@@ -6,11 +6,11 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
 
-from .__types import UUID7PrimaryKey
+from ...__types import UUID7PrimaryKey
 
 if TYPE_CHECKING:
-    from .blog_post import BlogPost
-    from .tag import Tag
+    from ..tag import Tag
+    from ._blog_post import BlogPost
 
 
 class BlogPostTag(Base, name="blog_post_tags"):

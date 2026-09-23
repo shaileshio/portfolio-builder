@@ -5,8 +5,7 @@ from sqlalchemy import Enum, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
-
-from .__types import CreatedAt, UUID7PrimaryKey
+from app.db.types import CreatedAt, UUID7PrimaryKey
 
 
 class ContactMessageStatus(StrEnum):

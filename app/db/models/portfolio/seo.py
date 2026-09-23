@@ -5,11 +5,10 @@ from sqlalchemy import ARRAY, Boolean, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
-
-from .__types import UUID7PrimaryKey
+from app.db.types import UUID7PrimaryKey
 
 if TYPE_CHECKING:
-    from .portfolio import Portfolio
+    from ._portfolio import Portfolio
 
 
 class PortfolioSEO(Base, name="portfolio_seo"):

@@ -5,11 +5,10 @@ from sqlalchemy import ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
-
-from .__types import UUID7PrimaryKey
+from app.db.types import UUID7PrimaryKey
 
 if TYPE_CHECKING:
-    from .skill_category import SkillCategory
+    from .category import SkillCategory
 
 
 class Skill(Base, name="skills"):

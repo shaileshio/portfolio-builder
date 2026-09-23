@@ -5,19 +5,18 @@ from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
-
-from .__types import UUID7PrimaryKey
+from app.db.types import UUID7PrimaryKey
 
 if TYPE_CHECKING:
-    from .skill import Skill
+    from ._project import Project
 
 
-class SkillCategory(Base, name="skill_categories"):
+class ProjectLink(Base, name="project_links"):
     id: Mapped[UUID7PrimaryKey]
 
-    portfolio_id: Mapped[UUID] = mapped_column(
+    project_id: Mapped[UUID] = mapped_column(
         ForeignKey(
-            column="portfolios.id",
+            column="projects.id",
             ondelete="CASCADE",
         ),
         nullable=False,
@@ -25,17 +24,20 @@ class SkillCategory(Base, name="skill_categories"):
         index=True,
     )
 
-    name: Mapped[str] = mapped_column(
+    label: Mapped[str] = mapped_column(
         String(length=100),
         nullable=False,
     )
 
-    sort_order: Mapped[int] = mapped_column(
-        default=0,
+    url: Mapped[str] = mapped_column(
+        String(length=1000),
         nullable=False,
     )
 
-    skills: Mapped[list[Skill]] = relationship(
-        back_populates="category",
-        cascade="all, delete-orphan",
+    icon: Mapped[str | None] = mapped_column(
+        String(length=100),
+    )
+
+    project: Mapped[Project] = relationship(
+        back_populates="links",
     )
