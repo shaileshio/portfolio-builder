@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 
 from app.core.config import Settings, get_settings
+from app.core.exceptions.handlers import register_exception_handlers
 from app.core.logging import configure_logging
 
 configure_logging()
@@ -28,6 +29,8 @@ def create_app() -> FastAPI:
         api_prefix=api_prefix,
         debug=debug,
     )
+
+    register_exception_handlers(app)
 
     app.add_middleware(
         middleware_class=CORSMiddleware,
