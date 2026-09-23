@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from logging import getLogger
+from logging import Logger, getLogger
 from typing import Any
 
 from fastapi import FastAPI, Request
@@ -11,7 +11,7 @@ from starlette.status import (
 
 from .error import AppError, HttpError
 
-logger = getLogger(__name__)
+logger: Logger = getLogger(__name__)
 
 
 def app_error_handler(request: Request, exc: AppError) -> JSONResponse:
@@ -47,10 +47,7 @@ def unhandled_error_handler(request: Request, exc: Exception) -> JSONResponse:
     )
 
 
-type ExceptionHandler = Callable[
-    [Request, Any],
-    JSONResponse,
-]
+type ExceptionHandler = Callable[[Request, Any], JSONResponse]
 
 
 EXCEPTION_HANDLERS: tuple[tuple[type[Exception], ExceptionHandler], ...] = (
@@ -60,6 +57,6 @@ EXCEPTION_HANDLERS: tuple[tuple[type[Exception], ExceptionHandler], ...] = (
 )
 
 
-def register_exception_handlers(app: FastAPI) -> None:
+def setup_exception_handlers(app: FastAPI) -> None:
     for type, handler in EXCEPTION_HANDLERS:
         app.add_exception_handler(type, handler)

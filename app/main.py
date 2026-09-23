@@ -1,10 +1,10 @@
-from fastapi import FastAPI, Request
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse
+from fastapi import FastAPI
 
 from app.core.config import Settings, get_settings
-from app.core.exceptions.handlers import register_exception_handlers
+from app.core.exceptions.handlers import setup_exception_handlers
 from app.core.logging import configure_logging
+from app.core.middlewares import setup_middlewares
+from app.core.swagger import setup_swagger_ui
 from app.modules.router import router
 
 configure_logging()
@@ -16,38 +16,21 @@ description: str = settings.app.description
 debug: bool = settings.app.debug
 
 
-allow_origins: list[str] = settings.cors.allow_origins
-allow_methods: list[str] = settings.cors.allow_methods
-allow_headers: list[str] = settings.cors.allow_headers
-allow_credentials: bool = settings.cors.allow_credentials
-
-
 def create_app() -> FastAPI:
     app = FastAPI(
         title=title,
         description=description,
         debug=debug,
+        docs_url=None,
     )
 
-    register_exception_handlers(app)
-
-    app.add_middleware(
-        middleware_class=CORSMiddleware,
-        allow_origins=allow_origins,
-        allow_methods=allow_methods,
-        allow_headers=allow_headers,
-        allow_credentials=allow_credentials,
-    )
+    setup_exception_handlers(app)
+    setup_middlewares(app)
+    setup_swagger_ui(app)
 
     return app
 
 
 app: FastAPI = create_app()
-
-
-@app.get(path="/", include_in_schema=False)
-def root(request: Request) -> RedirectResponse:
-    return RedirectResponse(url="/docs", status_code=307)
-
 
 app.include_router(router, prefix="/api/v1")
