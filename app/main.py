@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 
 from app.core.config import Settings, get_settings
 
@@ -37,3 +38,8 @@ def create_app() -> FastAPI:
 
 
 app: FastAPI = create_app()
+
+
+@app.get(path="/", include_in_schema=False)
+def root(request: Request) -> RedirectResponse:
+    return RedirectResponse(url="/docs", status_code=307)
