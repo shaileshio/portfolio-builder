@@ -25,6 +25,7 @@ class ContactMessage(Base, name="contact_messages"):
             ondelete="CASCADE",
         ),
         nullable=False,
+        unique=True,
         index=True,
     )
 

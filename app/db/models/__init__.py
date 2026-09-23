@@ -6,10 +6,8 @@ from .education import Education
 from .experience import Experience
 from .media_asset import MediaAsset
 from .portfolio import Portfolio
-from .portfolio_section import PortfolioSection
 from .portfolio_seo import PortfolioSEO
 from .portfolio_settings import PortfolioSettings
-from .portfolio_theme import PortfolioTheme
 from .profile import Profile
 from .project import Project
 from .project_image import ProjectImage
@@ -34,9 +32,7 @@ __all__: list[str] = [
     "MediaAsset",
     "Portfolio",
     "PortfolioSEO",
-    "PortfolioSection",
     "PortfolioSettings",
-    "PortfolioTheme",
     "Profile",
     "Project",
     "ProjectImage",

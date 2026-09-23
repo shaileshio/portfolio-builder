@@ -21,6 +21,7 @@ class Service(Base, name="services"):
             ondelete="CASCADE",
         ),
         nullable=False,
+        unique=True,
         index=True,
     )
 

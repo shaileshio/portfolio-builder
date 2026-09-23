@@ -106,7 +106,7 @@
   },
 
   "python.analysis.autoImportCompletions": true,
-  "python.analysis.completeFunctionParens": true,
+  "python.analysis.completeFunctionParens": false,
   "python.analysis.inlayHints.callArgumentNames": "all",
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.variableTypes": true,

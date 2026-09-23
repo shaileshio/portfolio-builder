@@ -18,8 +18,12 @@ class SocialLink(Base, name="social_links"):
     id: Mapped[UUID7PrimaryKey]
 
     portfolio_id: Mapped[UUID] = mapped_column(
-        ForeignKey(column="portfolios.id"),
+        ForeignKey(
+            column="portfolios.id",
+            ondelete="CASCADE",
+        ),
         nullable=False,
+        unique=True,
         index=True,
     )
 
@@ -38,7 +42,7 @@ class SocialLink(Base, name="social_links"):
     )
 
     icon: Mapped[str | None] = mapped_column(
-        String(100),
+        String(length=100),
     )
 
     sort_order: Mapped[int] = mapped_column(

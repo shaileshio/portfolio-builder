@@ -16,21 +16,25 @@ class Skill(Base, name="skills"):
     id: Mapped[UUID7PrimaryKey]
 
     portfolio_id: Mapped[UUID] = mapped_column(
-        ForeignKey(column="portfolios.id"),
+        ForeignKey(
+            column="portfolios.id",
+            ondelete="CASCADE",
+        ),
         nullable=False,
+        unique=True,
         index=True,
     )
 
     category_id: Mapped[UUID | None] = mapped_column(
         ForeignKey(
-            "skill_categories.id",
+            column="skill_categories.id",
             ondelete="SET NULL",
         ),
         index=True,
     )
 
     name: Mapped[str] = mapped_column(
-        String(100),
+        String(length=100),
         nullable=False,
     )
 
@@ -47,6 +51,6 @@ class Skill(Base, name="skills"):
         nullable=False,
     )
 
-    category: Mapped[SkillCategory | None] = relationship(
+    skill_category: Mapped[SkillCategory | None] = relationship(
         back_populates="skills",
     )

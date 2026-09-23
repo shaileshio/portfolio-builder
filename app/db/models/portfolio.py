@@ -21,10 +21,8 @@ if TYPE_CHECKING:
         Certification,
         Education,
         Experience,
-        PortfolioSection,
         PortfolioSEO,
         PortfolioSettings,
-        PortfolioTheme,
         Profile,
         Project,
         Service,
@@ -47,8 +45,11 @@ class Portfolio(Base, name="portfolios"):
     id: Mapped[UUID7PrimaryKey]
 
     owner_id: Mapped[UUID] = mapped_column(
-        ForeignKey(column="users.id"),
-        nullable=False,
+        ForeignKey(
+            column="users.id",
+            ondelete="SET NULL",
+        ),
+        unique=True,
         index=True,
     )
 
@@ -59,8 +60,8 @@ class Portfolio(Base, name="portfolios"):
 
     slug: Mapped[str] = mapped_column(
         String(length=220),
-        unique=True,
         nullable=False,
+        unique=True,
         index=True,
     )
 
@@ -108,62 +109,58 @@ class Portfolio(Base, name="portfolios"):
         cascade=_CASCADE_DELETE_ORPHAN,
     )
 
-    theme: Mapped[PortfolioTheme | None] = relationship(
-        back_populates="portfolio",
-        uselist=False,
-        cascade=_CASCADE_DELETE_ORPHAN,
-    )
-
     seo: Mapped[PortfolioSEO | None] = relationship(
         back_populates="portfolio",
         uselist=False,
         cascade=_CASCADE_DELETE_ORPHAN,
     )
 
-    sections: Mapped[list[PortfolioSection]] = relationship(
-        back_populates="portfolio",
-        cascade=_CASCADE_DELETE_ORPHAN,
-        order_by="PortfolioSection.sort_order",
-    )
-
-    social_links: Mapped[list[SocialLink]] = relationship(
-        back_populates="portfolio",
-        cascade=_CASCADE_DELETE_ORPHAN,
-    )
-
     experiences: Mapped[list[Experience]] = relationship(
         back_populates="portfolio",
         cascade=_CASCADE_DELETE_ORPHAN,
+        order_by="Experience.sort_order",
     )
 
     educations: Mapped[list[Education]] = relationship(
         back_populates="portfolio",
         cascade=_CASCADE_DELETE_ORPHAN,
+        order_by="Education.sort_order",
     )
 
     certifications: Mapped[list[Certification]] = relationship(
         back_populates="certification",
         cascade=_CASCADE_DELETE_ORPHAN,
+        order_by="Certification.sort_order",
+    )
+
+    social_links: Mapped[list[SocialLink]] = relationship(
+        back_populates="portfolio",
+        cascade=_CASCADE_DELETE_ORPHAN,
+        order_by="SocialLink.sort_order",
     )
 
     skills: Mapped[list[Skill]] = relationship(
         back_populates="portfolio",
         cascade=_CASCADE_DELETE_ORPHAN,
+        order_by="Skill.sort_order",
     )
 
     projects: Mapped[list[Project]] = relationship(
         back_populates="portfolio",
         cascade=_CASCADE_DELETE_ORPHAN,
+        order_by="Project.sort_order",
     )
 
     services: Mapped[list[Service]] = relationship(
         back_populates="portfolio",
         cascade=_CASCADE_DELETE_ORPHAN,
+        order_by="Service.sort_order",
     )
 
     testimonials: Mapped[list[Testimonial]] = relationship(
         back_populates="portfolio",
         cascade=_CASCADE_DELETE_ORPHAN,
+        order_by="Testimonial.sort_order",
     )
 
     blog_posts: Mapped[list[BlogPost]] = relationship(

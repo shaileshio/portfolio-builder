@@ -16,8 +16,12 @@ class SkillCategory(Base, name="skill_categories"):
     id: Mapped[UUID7PrimaryKey]
 
     portfolio_id: Mapped[UUID] = mapped_column(
-        ForeignKey(column="portfolios.id"),
+        ForeignKey(
+            column="portfolios.id",
+            ondelete="CASCADE",
+        ),
         nullable=False,
+        unique=True,
         index=True,
     )
 

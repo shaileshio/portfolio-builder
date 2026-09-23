@@ -21,6 +21,7 @@ class ProjectImage(Base, name="project_images"):
             ondelete="CASCADE",
         ),
         nullable=False,
+        unique=True,
         index=True,
     )
 

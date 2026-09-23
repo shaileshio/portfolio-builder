@@ -16,14 +16,14 @@ class Technology(Base, name="technologies"):
 
     name: Mapped[str] = mapped_column(
         String(length=100),
-        unique=True,
         nullable=False,
+        unique=True,
     )
 
     slug: Mapped[str] = mapped_column(
         String(length=120),
-        unique=True,
         nullable=False,
+        unique=True,
         index=True,
     )
 

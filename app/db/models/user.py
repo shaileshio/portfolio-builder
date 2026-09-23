@@ -16,8 +16,8 @@ class User(Base, name="users"):
 
     email: Mapped[str] = mapped_column(
         __name_pos=String(length=320),
-        unique=True,
         nullable=False,
+        unique=True,
         index=True,
     )
 

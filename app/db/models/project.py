@@ -5,6 +5,7 @@ from uuid import UUID
 from sqlalchemy import (
     Boolean,
     Enum,
+    ForeignKey,
     Integer,
     String,
     Text,
@@ -34,7 +35,12 @@ class Project(Base, name="projects"):
     id: Mapped[UUID7PrimaryKey]
 
     portfolio_id: Mapped[UUID] = mapped_column(
+        ForeignKey(
+            column="portfolios.id",
+            ondelete="CASCADE",
+        ),
         nullable=False,
+        unique=True,
         index=True,
     )
 
@@ -88,11 +94,11 @@ class Project(Base, name="projects"):
     )
 
     repository_url: Mapped[str | None] = mapped_column(
-        String(1000),
+        String(length=1000),
     )
 
     demo_url: Mapped[str | None] = mapped_column(
-        String(1000),
+        String(length=1000),
     )
 
     featured: Mapped[bool] = mapped_column(

@@ -17,8 +17,12 @@ class Certification(Base, name="certifications"):
     id: Mapped[UUID7PrimaryKey]
 
     portfolio_id: Mapped[UUID] = mapped_column(
-        ForeignKey(column="portfolios.id"),
+        ForeignKey(
+            column="portfolios.id",
+            ondelete="CASCADE",
+        ),
         nullable=False,
+        unique=True,
         index=True,
     )
 
@@ -46,6 +50,11 @@ class Certification(Base, name="certifications"):
 
     expires_at: Mapped[date | None] = mapped_column(
         Date,
+    )
+
+    sort_order: Mapped[int] = mapped_column(
+        default=0,
+        nullable=False,
     )
 
     portfolio: Mapped[Portfolio] = relationship(

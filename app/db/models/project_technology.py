@@ -24,6 +24,7 @@ class ProjectTechnology(Base, name="project_technologies"):
             ondelete="CASCADE",
         ),
         nullable=False,
+        unique=True,
         index=True,
     )
 
@@ -33,6 +34,7 @@ class ProjectTechnology(Base, name="project_technologies"):
             ondelete="CASCADE",
         ),
         nullable=False,
+        unique=True,
         index=True,
     )
 

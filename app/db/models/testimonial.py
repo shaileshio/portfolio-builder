@@ -21,6 +21,7 @@ class Testimonial(Base, name="testimonials"):
             ondelete="CASCADE",
         ),
         nullable=False,
+        unique=True,
         index=True,
     )
 

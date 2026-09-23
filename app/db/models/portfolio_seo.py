@@ -16,7 +16,10 @@ class PortfolioSEO(Base, name="portfolio_seo"):
     id: Mapped[UUID7PrimaryKey]
 
     portfolio_id: Mapped[UUID] = mapped_column(
-        ForeignKey(column="portfolios.id"),
+        ForeignKey(
+            column="portfolios.id",
+            ondelete="CASCADE",
+        ),
         nullable=False,
         unique=True,
         index=True,
@@ -31,7 +34,7 @@ class PortfolioSEO(Base, name="portfolio_seo"):
     )
 
     keywords: Mapped[list[str]] = mapped_column(
-        ARRAY(String),
+        ARRAY(item_type=String),
         nullable=False,
         default=list,
     )

@@ -25,6 +25,7 @@ class MediaAsset(Base, name="media_assets"):
             ondelete="CASCADE",
         ),
         nullable=False,
+        unique=True,
         index=True,
     )
 

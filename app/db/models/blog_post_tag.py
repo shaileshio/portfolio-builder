@@ -22,6 +22,7 @@ class BlogPostTag(Base, name="blog_post_tags"):
             ondelete="CASCADE",
         ),
         nullable=False,
+        unique=True,
         index=True,
     )
 
@@ -38,4 +39,6 @@ class BlogPostTag(Base, name="blog_post_tags"):
         back_populates="tags",
     )
 
-    tag: Mapped[Tag] = relationship(back_populates="blog_post_tags")
+    tag: Mapped[Tag] = relationship(
+        back_populates="blog_post_tags",
+    )

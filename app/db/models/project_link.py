@@ -21,6 +21,7 @@ class ProjectLink(Base, name="project_links"):
             ondelete="CASCADE",
         ),
         nullable=False,
+        unique=True,
         index=True,
     )
 
