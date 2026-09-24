@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from app.db.models.user import User
 from app.db.session import AsyncSessionDep
 
-from .dependencies import UserServiceDep
+from .depends import UserServiceDep
 from .schemas import LoginRequest, LogoutRequest, RegisterRequest, RegisterResponse
 
 router = APIRouter(prefix="/auth", tags=["Authencation"])
