@@ -1,0 +1,6 @@
+from typing import Protocol
+
+
+class Hasher[T](Protocol):
+    def hash(self, value: T) -> str: ...
+    def verify(self, value: T, hashed: str) -> bool: ...
