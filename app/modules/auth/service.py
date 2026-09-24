@@ -1,5 +1,3 @@
-from sqlalchemy.exc import IntegrityError
-
 from app.core.security.providers import get_hasher
 from app.db.models.user import User
 from app.db.repositories import UserRepository
@@ -19,9 +17,7 @@ class UserService:
         hasher = get_hasher()
         password_hash = hasher.hash(data.password)
 
-        try:
-            user = await self.repository.create(data.email, password_hash)
-
-            return user
-        except IntegrityError:
+        if await self.repository.email_exists(data.email):
             raise EmailAlreadyExistError
+
+        return await self.repository.create(data.email, password_hash)
