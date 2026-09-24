@@ -4,11 +4,9 @@ from typing import Any
 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
-from starlette.status import (
-    HTTP_500_INTERNAL_SERVER_ERROR,
-)
+from starlette.status import HTTP_400_BAD_REQUEST, HTTP_500_INTERNAL_SERVER_ERROR
 
-from .errors import AppError
+from .errors import AppError, HttpError
 
 logger: Logger = getLogger(__name__)
 
@@ -17,7 +15,16 @@ def app_error_handler(request: Request, exc: AppError) -> JSONResponse:
     logger.debug("Application error: %s", exc.detail)
 
     return JSONResponse(
-        status_code=exc.status_code,
+        status_code=HTTP_400_BAD_REQUEST,
+        content={"detail": exc.detail},
+    )
+
+
+def http_error_handler(request: Request, exc: HttpError) -> JSONResponse:
+    logger.debug("Application error: %s", exc.detail)
+
+    return JSONResponse(
+        status_code=exc.status,
         content={"code": exc.code, "detail": exc.detail},
     )
 
@@ -42,6 +49,7 @@ type ErrorHandler = Callable[[Request, Any], JSONResponse]
 
 ERROR_HANDLERS: tuple[tuple[type[Exception], ErrorHandler], ...] = (
     (AppError, app_error_handler),
+    (HttpError, http_error_handler),
     (Exception, unhandled_error_handler),
 )
 

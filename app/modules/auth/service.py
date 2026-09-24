@@ -1,0 +1,27 @@
+from sqlalchemy.exc import IntegrityError
+
+from app.core.security.providers import get_hasher
+from app.db.models.user import User
+from app.db.repositories import UserRepository
+
+from .errors import ConfirmPasswordNotMatchError, EmailAlreadyExistError
+from .schemas import RegisterRequest
+
+
+class UserService:
+    def __init__(self, repository: UserRepository) -> None:
+        self.repository = repository
+
+    async def create_active_user(self, data: RegisterRequest) -> User:
+        if data.password != data.confirm_password:
+            raise ConfirmPasswordNotMatchError
+
+        hasher = get_hasher()
+        password_hash = hasher.hash(data.password)
+
+        try:
+            user = await self.repository.create(data.email, password_hash)
+
+            return user
+        except IntegrityError:
+            raise EmailAlreadyExistError

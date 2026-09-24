@@ -109,7 +109,7 @@
   "python.analysis.completeFunctionParens": false,
   "python.analysis.inlayHints.callArgumentNames": "off",
   "python.analysis.inlayHints.functionReturnTypes": true,
-  "python.analysis.inlayHints.variableTypes": true,
+  "python.analysis.inlayHints.variableTypes": false,
 
   // ==========================================
   // Ruff

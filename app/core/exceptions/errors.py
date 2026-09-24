@@ -1,39 +1,68 @@
 class AppError(Exception):
-    """Base exception for application errors."""
-
-    def __init__(self, detail: str, *, code: str, status_code: int = 400) -> None:
-        self.detail: str = detail
-        self.code: str = code
-        self.status_code: int = status_code
+    def __init__(self, detail: str) -> None:
+        self.detail = detail
 
         super().__init__(detail)
 
 
-class UnauthorizedError(AppError):
-    detail: str = "Authentication required"
-    code: str = "unauthorized"
-    status_code = 401
+class HttpError(AppError):
+    def __init__(self, detail: str, *, code: str, status: int) -> None:
+        self.code = code
+        self.status = status
+
+        super().__init__(detail)
 
 
-class ForbiddenError(AppError):
-    detail: str = "Access denied"
-    code: str = "forbidden"
-    status_code = 403
+class UnauthorizedError(HttpError):
+    def __init__(
+        self,
+        detail: str = "Authentication required",
+        *,
+        code: str = "unauthorized",
+        status: int = 401,
+    ) -> None:
+        super().__init__(detail, code=code, status=status)
 
 
-class NotFoundError(AppError):
-    detail: str = "Resource not found"
-    code: str = "not_found"
-    status_code = 404
+class ForbiddenError(HttpError):
+    def __init__(
+        self,
+        detail: str = "Access denied",
+        *,
+        code: str = "forbidden",
+        status: int = 403,
+    ) -> None:
+        super().__init__(detail, code=code, status=status)
 
 
-class ConflictError(AppError):
-    detail: str = "Resource conflict"
-    code: str = "conflict"
-    status_code = 409
+class NotFoundError(HttpError):
+    def __init__(
+        self,
+        detail: str = "Resource not found",
+        *,
+        code: str = "not_found",
+        status: int = 404,
+    ) -> None:
+        super().__init__(detail, code=code, status=status)
 
 
-class BadRequestError(AppError):
-    detail: str = "Bad request"
-    code: str = "bad_request"
-    status_code = 400
+class ConflictError(HttpError):
+    def __init__(
+        self,
+        detail: str = "Resource conflict",
+        *,
+        code: str = "conflict",
+        status: int = 409,
+    ) -> None:
+        super().__init__(detail, code=code, status=status)
+
+
+class BadRequestError(HttpError):
+    def __init__(
+        self,
+        detail: str = "Bad request",
+        *,
+        code: str = "bad_request",
+        status: int = 400,
+    ) -> None:
+        super().__init__(detail, code=code, status=status)

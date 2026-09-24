@@ -6,10 +6,10 @@ from app.db.session import AsyncSessionDep
 
 from .schemas import HealthReadyErrorResponse, HealthReadyResponse, HealthResponse
 
-router = APIRouter()
+router = APIRouter(prefix="/health", tags=["Health"])
 
 
-@router.get("/health")
+@router.get("/")
 async def health() -> HealthResponse:
     return HealthResponse(status="ok")
 
