@@ -127,7 +127,7 @@ class Portfolio(Base, name="portfolios"):
     )
 
     certifications: Mapped[list[Certification]] = relationship(
-        back_populates="certification",
+        back_populates="portfolio",
         cascade=_CASCADE_DELETE_ORPHAN,
         order_by="Certification.sort_order",
     )

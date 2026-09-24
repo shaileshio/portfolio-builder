@@ -35,6 +35,6 @@ class SkillCategory(Base, name="skill_categories"):
     )
 
     skills: Mapped[list[Skill]] = relationship(
-        back_populates="category",
+        back_populates="skill_category",
         cascade="all, delete-orphan",
     )

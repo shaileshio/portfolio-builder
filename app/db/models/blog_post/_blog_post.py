@@ -74,6 +74,6 @@ class BlogPost(Base, name="blog_posts"):
     )
 
     tags: Mapped[list[BlogPostTag]] = relationship(
-        back_populates="blog_posts",
+        back_populates="blog_post",
         cascade="all, delete-orphan",
     )

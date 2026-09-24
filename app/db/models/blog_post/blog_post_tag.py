@@ -34,7 +34,7 @@ class BlogPostTag(Base, name="blog_post_tags"):
         index=True,
     )
 
-    post: Mapped[BlogPost] = relationship(
+    blog_post: Mapped[BlogPost] = relationship(
         back_populates="tags",
     )
 

@@ -8,6 +8,7 @@ from app.db.base import Base
 from app.db.types import UUID7PrimaryKey
 
 if TYPE_CHECKING:
+    from ..portfolio import Portfolio
     from .category import SkillCategory
 
 
@@ -51,5 +52,9 @@ class Skill(Base, name="skills"):
     )
 
     skill_category: Mapped[SkillCategory | None] = relationship(
+        back_populates="skills",
+    )
+
+    portfolio: Mapped[Portfolio] = relationship(
         back_populates="skills",
     )
