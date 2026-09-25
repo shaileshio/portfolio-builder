@@ -7,7 +7,8 @@ from app.db.base import Base
 from app.db.types import CreatedAt, UpdatedAt, UUID7PrimaryKey
 
 if TYPE_CHECKING:
-    from .portfolio import Portfolio
+    from ..portfolio import Portfolio
+    from .session import UserSession
 
 
 class User(Base, name="users"):
@@ -38,6 +39,12 @@ class User(Base, name="users"):
 
     created_at: Mapped[CreatedAt]
     updated_at: Mapped[UpdatedAt]
+
+    sessions: Mapped[list[UserSession]] = relationship(
+        back_populates="user",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
 
     portfolios: Mapped[list[Portfolio]] = relationship(
         back_populates="owner",

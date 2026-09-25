@@ -17,7 +17,7 @@ from .social_link import SocialLink
 from .tag import Tag
 from .technology import Technology
 from .testimonial import Testimonial
-from .user import User
+from .user import User, UserSession
 
 __all__: list[str] = [
     "BlogPost",
@@ -43,4 +43,5 @@ __all__: list[str] = [
     "Technology",
     "Testimonial",
     "User",
+    "UserSession",
 ]
