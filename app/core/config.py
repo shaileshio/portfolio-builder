@@ -19,6 +19,7 @@ class CorsConfig(BaseModel):
 
 class DatabaseConfig(BaseModel):
     url: str | None = None
+    test_url: str | None = None
 
 
 class Settings(BaseSettings):
