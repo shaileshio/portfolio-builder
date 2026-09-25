@@ -1,26 +1,24 @@
 from collections.abc import AsyncGenerator
-from typing import Any
 
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import (
+    AsyncConnection,
     AsyncEngine,
     AsyncSession,
-    async_sessionmaker,
     create_async_engine,
 )
 
 from app.core.config import get_settings
-from app.db.base import Base
 from app.db.depends import get_async_session
 from app.main import app
 
 settings = get_settings()
 
-TEST_DATABASE_URL: str | None = settings.database.test_url
+TEST_DATABASE_URL = settings.database.test_url
 
 if TEST_DATABASE_URL is None:
-    raise OSError("Database url not found.")
+    raise OSError("Test database URL not found.")
 
 
 @pytest_asyncio.fixture
@@ -30,43 +28,59 @@ async def async_engine() -> AsyncGenerator[AsyncEngine]:
         echo=False,
         pool_pre_ping=True,
     )
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
 
-    yield engine
-    await engine.dispose()
+    try:
+        yield engine
+    finally:
+        await engine.dispose()
+
+
+@pytest_asyncio.fixture
+async def async_connection(
+    async_engine: AsyncEngine,
+) -> AsyncGenerator[AsyncConnection]:
+    async with async_engine.connect() as connection:
+        transaction = await connection.begin()
+
+        try:
+            yield connection
+        finally:
+            if transaction.is_active:
+                await transaction.rollback()
 
 
 @pytest_asyncio.fixture
 async def async_session(
-    async_engine: AsyncEngine,
+    async_connection: AsyncConnection,
 ) -> AsyncGenerator[AsyncSession]:
-    async_session = async_sessionmaker(
-        bind=async_engine,
-        class_=AsyncSession,
+    session = AsyncSession(
+        bind=async_connection,
         expire_on_commit=False,
+        join_transaction_mode="create_savepoint",
     )
 
-    async with async_session() as session:
-        try:
-            yield session
-        finally:
-            await session.rollback()
+    try:
+        yield session
+    finally:
+        await session.close()
 
 
 @pytest_asyncio.fixture
-async def async_client(async_session: AsyncSession) -> AsyncGenerator[AsyncClient, Any]:
-    async def get_async_test_session() -> AsyncGenerator[AsyncSession, Any]:
+async def async_client(async_session: AsyncSession) -> AsyncGenerator[AsyncClient]:
+
+    async def get_async_test_session() -> AsyncGenerator[AsyncSession]:
         yield async_session
 
     app.dependency_overrides[get_async_session] = get_async_test_session
 
-    transport = ASGITransport(app=app)
+    try:
+        transport = ASGITransport(app=app)
 
-    async with AsyncClient(
-        transport=transport,
-        base_url="http://test/api/v1",
-    ) as async_client:
-        yield async_client
+        async with AsyncClient(
+            transport=transport,
+            base_url="http://test/api/v1",
+        ) as client:
+            yield client
 
-    app.dependency_overrides.clear()
+    finally:
+        app.dependency_overrides.pop(get_async_session, None)
