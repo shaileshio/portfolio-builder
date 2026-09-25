@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.db.session import AsyncSessionDep
+from app.db.depends import AsyncSessionDep
 
 from .schemas import HealthReadyErrorResponse, HealthReadyResponse, HealthResponse
 

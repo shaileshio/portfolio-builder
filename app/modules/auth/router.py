@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
+from app.db.depends import AsyncSessionDep
 from app.db.models.user import User
-from app.db.session import AsyncSessionDep
 
 from .depends import UserServiceDep
 from .schemas import LoginRequest, LogoutRequest, RegisterRequest, RegisterResponse

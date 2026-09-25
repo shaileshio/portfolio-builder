@@ -12,7 +12,7 @@ from sqlalchemy.ext.asyncio import (
 
 from app.core.config import get_settings
 from app.db.base import Base
-from app.db.session import get_async_session
+from app.db.depends import get_async_session
 from app.main import app
 
 settings = get_settings()

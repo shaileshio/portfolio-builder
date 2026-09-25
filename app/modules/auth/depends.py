@@ -2,8 +2,8 @@ from typing import Annotated
 
 from fastapi import Depends
 
+from app.db.depends import AsyncSessionDep
 from app.db.repositories.user import UserRepository
-from app.db.session import AsyncSessionDep
 
 from .service import UserService
 
