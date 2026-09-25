@@ -47,6 +47,6 @@ class User(Base, name="users"):
     )
 
     portfolios: Mapped[list[Portfolio]] = relationship(
-        back_populates="owner",
+        back_populates="user",
         cascade="all, delete-orphan",
     )

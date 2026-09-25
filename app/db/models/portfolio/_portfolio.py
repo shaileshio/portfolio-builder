@@ -43,7 +43,7 @@ class PortfolioStatus(StrEnum):
 class Portfolio(Base, name="portfolios"):
     id: Mapped[UUID7PrimaryKey]
 
-    owner_id: Mapped[UUID] = mapped_column(
+    user_id: Mapped[UUID] = mapped_column(
         ForeignKey(
             column="users.id",
             ondelete="SET NULL",
@@ -92,7 +92,7 @@ class Portfolio(Base, name="portfolios"):
     created_at: Mapped[CreatedAt]
     updated_at: Mapped[UpdatedAt]
 
-    owner: Mapped[User] = relationship(
+    user: Mapped[User] = relationship(
         back_populates="portfolios",
     )
 
