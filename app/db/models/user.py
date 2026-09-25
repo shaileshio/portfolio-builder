@@ -14,24 +14,24 @@ class User(Base, name="users"):
     id: Mapped[UUID7PrimaryKey]
 
     email: Mapped[str] = mapped_column(
-        __name_pos=String(length=320),
+        String(length=320),
         nullable=False,
         unique=True,
         index=True,
     )
 
     password_hash: Mapped[str | None] = mapped_column(
-        __name_pos=String(length=255),
+        String(length=255),
     )
 
     is_active: Mapped[bool] = mapped_column(
-        __name_pos=Boolean,
+        Boolean,
         default=True,
         nullable=False,
     )
 
     is_verified: Mapped[bool] = mapped_column(
-        __name_pos=Boolean,
+        Boolean,
         default=False,
         nullable=False,
     )
