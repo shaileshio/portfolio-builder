@@ -1,4 +1,4 @@
-from app.core.security.providers import get_hasher
+from app.core.security.hashing import get_hasher
 from app.db.models.user import User
 from app.db.repositories import UserRepository
 

@@ -1,4 +1,4 @@
-from .hashing import Argon2Hasher
+from ._hashing import Argon2Hasher
 
 
 def get_hasher() -> Argon2Hasher:
